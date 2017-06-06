@@ -1,0 +1,317 @@
+<%
+// 首页图片 13
+var topPics = temp.rollPicture(269);
+
+// 最新动态
+var newArticles = temp.articlePageTop(1, 10, session.site.siteId);
+
+// 新闻 2
+var news = temp.articlePage(1, 10, 2);
+
+// 最新活动 3
+var foods = temp.articlePage(1, 10, 271);
+
+// 旅游 4
+var travels = temp.articlePage(1, 9, 4);
+
+// 教育 5
+var educations = temp.articlePage(1, 10,5);
+
+// 公告
+var noticeList = temp.notice(1);
+%>
+
+<% 
+	var headContent = {
+%>
+	<% include("/template/sfy/includes/header.html"){} %>
+	<meta property="qc:admins" content="3746002437626416706375" />
+	<meta name="baidu-site-verification" content="HoZ9m8VIaf" />
+<script type="text/javascript">
+<!--
+	$(function(){
+		$('.carousel').carousel({
+			interval: 2000
+		});
+		
+		// js加载避免优先级问题
+		$('.more').css('float','right').css('font-size','12px').css('color','green');
+		
+
+	});
+//-->
+</script>
+
+<%
+};
+%>
+
+<%
+var bodyContent = {
+%>
+<%  include("/template/sfy/includes/header_menu.html"){} %>
+
+
+<div class="container">
+	
+	<div class="row">
+	  
+	  <!-- 图片 -->
+	  <div class="col-md-12">
+		
+		<div class="panel panel-default">
+		  <div class="panel-body" style="padding: 0px;">
+	
+				 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+					  <!-- Indicators -->
+					  <ol class="carousel-indicators">
+						  <% for(item in topPics){ %>
+						  	<li data-target="#carousel-example-generic" data-slide-to="${itemLP.index-1}" ${itemLP.index==1?"class=\"active\"":""}></li>
+						  <%}%>
+					  </ol>
+
+					  <!-- Wrapper for slides -->
+					  <div class="carousel-inner" role="listbox">
+						<% for(item in topPics){ %>
+							<div style="height: 450px;" class="item ${itemLP.index==1?'active':''}">
+							  <% if(strutil.isNotEmpty(item.url)) { %>
+							  <a href="${item.url}" target="_blank">
+							  <% } %>
+							   	<img src="${flyfox.getImage(item)}" alt="${item.title}" style="width:100%">
+							  <% if(strutil.isNotEmpty(item.url)) { %>
+							  </a>
+							  <% } %>
+							  <div class="carousel-caption">
+								<h4></h4>
+								<p>${item.title}</p>
+							  </div>
+							</div>
+						<% } %>
+						
+						
+					  </div>
+	
+					  <!-- Controls -->
+					  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">上一页</span>
+					  </a>
+					  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">下一页</span>
+					  </a>
+					</div>
+		  </div>
+		</div>
+	  
+	  </div>
+	  
+	</div>
+
+	<div class="row">
+	 	
+	  <div class="col-md-8">
+	  	<%  
+			if(noticeList != null && noticeList.~size > 0) {
+		%>
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+			<h3 class="panel-title">公告</h3>
+		  </div>
+		  <div class="panel-body">
+			<%
+				for(item in noticeList){ 
+			%>
+			<p><span class="label label-info">${itemLP.index}</span> <a href="${item.url}" target="_blank">${item.content}</a></p>
+			<% 
+				}
+			%>
+		 </div>
+		</div>
+		<%
+			} 
+		%>
+	  	<!-- 旅游 -->
+	  	<div class="panel panel-default">
+		  <div class="panel-heading">
+		  	<h3 class="panel-title">
+				<a href="${BASE_PATH }${flyfox.getMenu(4)}.html" target="_blank">最新客照</a>
+				<a class="more" href="${BASE_PATH }${flyfox.getMenu(4)}.html" target="_blank">更多</a>
+			</h3>
+		  </div>
+		  <div class="panel-body">
+		  
+		  <div class="row">
+		  <% for(item in travels.list){ %>
+			<div class="col-sm-6 col-md-4">
+		        <div class="thumbnail">
+		          <a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">
+		          <img alt="${item.title}" src="${flyfox.getImage(item)}" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
+		          </a>
+		          <div class="caption">
+		            <a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">${item.title}</a>
+		          </div>
+		        </div>
+		      </div>
+		      <% if(itemLP.index%3==0){ %>
+		  </div>
+		  <div class="row">
+		      <% } %>
+		  <% } %>
+		  </div>
+	
+		  </div>
+		</div>
+	  	<div class="panel panel-default">
+		  <div class="panel-heading">
+		  	<h3 class="panel-title">
+				<a href="${BASE_PATH }${flyfox.getMenu(4)}.html" target="_blank">婚纱套系</a>
+				<a class="more" href="${BASE_PATH }${flyfox.getMenu(4)}.html" target="_blank">更多</a>
+			</h3>
+		  </div>
+		  <div class="panel-body">
+
+		  <div class="row">
+		  <% for(item in travels.list){ %>
+			<div class="col-sm-6 col-md-4">
+		        <div class="thumbnail">
+		          <a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">
+		          <img alt="${item.title}" src="${flyfox.getImage(item)}" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
+		          </a>
+		          <div class="caption">
+		            <a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">${item.title}</a>
+		          </div>
+		        </div>
+		      </div>
+		      <% if(itemLP.index%3==0){ %>
+		  </div>
+		  <div class="row">
+		      <% } %>
+		  <% } %>
+		  </div>
+
+		  </div>
+		</div>
+
+		<!-- 地图 -->
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+			<h3 class="panel-title">地图</h3>
+		  </div>
+		  <div class="panel-body" style="padding: 0px;">
+		  	<div  class="thumbnail" >
+		    	    <img width="100%" height="450" src="http://api.map.baidu.com/staticimage?center=118.701205,39.750807&zoom=15&width=930&height=450&markers=118.701205,39.750807"/>
+		    </div>
+		  </div>
+		</div>
+	  </div>
+	
+	  <div class="col-md-4">	
+		
+		<!-- 最新活动 -->
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		  	<h3 class="panel-title">
+				<a href="${BASE_PATH }${flyfox.getMenu(3)}.html" target="_blank">最新活动</a>
+				<a class="more" href="${BASE_PATH }${flyfox.getMenu(3)}.html" target="_blank">更多</a>
+			</h3>
+		  </div>
+		  <div class="panel-body" style="padding-bottom:0px;">
+			<div class="row">
+			  <% for(item in foods.list){ %>
+			  	<% if(itemLP.index <= 2){ %>
+			  	 <div class="col-md-6">
+					<div class="thumbnail">
+					  <a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">
+					  <img alt="${item.title}" src="${flyfox.getImage(item)}" data-holder-rendered="true" style="height: 120px; width: 100%; display: block;">
+					  </a>
+					  <div class="caption">
+						<a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">${item.title}</a>
+					  </div>
+					</div>
+				  </div>
+			      <% } %>
+			  <% } %>
+			</div>
+		  </div>
+			
+		 <ul class="list-group">
+		  	<% for(item in foods.list){ %>
+		  		<% if(itemLP.index > 2){ %>
+				<li class="list-group-item">
+					<span class="badge">${flyfox.substr(item.publish_time,5,10) }</span>
+					<a href="${BASE_PATH }front/article/${item.id}.html" target="_blank" title="${item.title}">
+					<% if (strutil.length(item.title) > 18) { %>
+						${strutil.subStringTo(item.title, 0, 18)}...
+					<% 	} else { %>
+						${item.title}
+					<%  } %>
+					</a>
+				</li>
+				<% } %>
+			<% } %>
+		  </ul>
+			
+		</div>
+		
+		<!-- 教育 -->
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+			<h3 class="panel-title">
+				<a href="${BASE_PATH }${flyfox.getMenu(5)}.html" target="_blank">拍照</a>
+				<a class="more" href="${BASE_PATH }${flyfox.getMenu(5)}.html" target="_blank">更多</a>
+			</h3>
+		  </div>
+		  
+		  <div class="panel-body" style="padding-bottom:0px;">
+			<div class="row">
+			  <% for(item in educations.list){ %>
+			  	<% if(itemLP.index <= 2){ %>
+			  	 <div class="col-md-6">
+					<div class="thumbnail">
+					  <a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">
+					  <img alt="${item.title}" src="${flyfox.getImage(item)}" data-holder-rendered="true" style="height: 120px; width: 100%; display: block;">
+					  </a>
+					  <div class="caption">
+						<a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">${item.title}</a>
+					  </div>
+					</div>
+				  </div>
+			      <% } %>
+			  <% } %>
+			</div>
+		  </div>
+		  
+		  <ul class="list-group">
+		  	<% for(item in educations.list){ %>
+		  		<% if(itemLP.index > 2){ %>
+				<li class="list-group-item">
+					<span class="badge">${flyfox.substr(item.publish_time,5,10) }</span>
+					<a href="${BASE_PATH }front/article/${item.id}.html" target="_blank" title="${item.title}">
+					<% if (strutil.length(item.title) > 18) { %>
+						${strutil.subStringTo(item.title, 0, 18)}...
+					<% 	} else { %>
+						${item.title}
+					<%  } %>
+					</a>
+				</li>
+				<% } %>
+			<% } %>
+		  </ul>
+		  
+		</div>
+		
+		<!-- 友情链接 -->
+	  	<%  include("/template/sfy/includes/friendly.html"){} %>
+		</div>
+	</div>
+
+</div>
+<%  include("/template/sfy/includes/footer.html"){} %>
+	
+<a id="scrollTop" href="javacript:void(0);" title="返回顶部" style="display: inline;"></a>
+	
+<%}; %>
+
+<% layout("/pages/template/_layout.html",{head:headContent,body:bodyContent}){ %>
+<%} %>

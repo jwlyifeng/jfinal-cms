@@ -1,0 +1,141 @@
+<%
+// 首页图片 13
+var topPics = temp.rollPicture(270);
+var travels = temp.articlePage(1, 9, 4);
+%>
+
+<%
+var headContent = {
+%>
+<% include("/template/sfy/includes/header.html"){} %>
+<meta property="qc:admins" content="3746002437626416706375"/>
+<script type="text/javascript">
+<!--
+	$(function(){
+		$('.carousel').carousel({
+			interval: 2000
+		});
+		
+		// js加载避免优先级问题
+		$('.more').css('float','right').css('font-size','12px').css('color','green');
+		
+
+	});
+//-->
+
+</script>
+<%
+};
+%>
+
+<%
+var bodyContent = {
+%>
+<%  include("/template/sfy/includes/header_menu.html"){} %>
+
+
+<div class="container">
+
+    <div class="row">
+        <!-- 图片 -->
+        <div class="col-md-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body" style="padding: 0px;">
+
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <% for(item in topPics){ %>
+                            <li data-target="#carousel-example-generic" data-slide-to="${itemLP.index-1}"
+                                ${itemLP.index==1?"class=\"active\"":""}></li>
+                            <%}%>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <% for(item in topPics){ %>
+                            <div style="height: 450px;" class="item ${itemLP.index==1?'active':''}">
+                                <% if(strutil.isNotEmpty(item.url)) { %>
+                                <a href="${item.url}" target="_blank">
+                                    <% } %>
+                                    <img src="${flyfox.getImage(item)}" alt="${item.title}" style="width:100%">
+                                    <% if(strutil.isNotEmpty(item.url)) { %>
+                                </a>
+                                <% } %>
+                                <div class="carousel-caption">
+                                    <h4></h4>
+                                    <p>${item.title}</p>
+                                </div>
+                            </div>
+                            <% } %>
+
+
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button"
+                           data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">上一页</span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" role="button"
+                           data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">下一页</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <!-- 旅游 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a href="${BASE_PATH }${flyfox.getMenu(4)}.html" target="_blank">客片展示</a>
+                        <a class="more" href="${BASE_PATH }${flyfox.getMenu(4)}.html" target="_blank">更多</a>
+                    </h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="row">
+                        <% for(item in travels.list){ %>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">
+                                    <img alt="${item.title}" src="${flyfox.getImage(item)}" data-holder-rendered="true"
+                                         style="height: 200px; width: 100%; display: block;">
+                                </a>
+                                <div class="caption">
+                                    <a href="${BASE_PATH }front/article/${item.id}.html"
+                                       target="_blank">${item.title}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <% if(itemLP.index%3==0){ %>
+                    </div>
+                    <div class="row">
+                        <% } %>
+                        <% } %>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<%  include("/template/sfy/includes/footer.html"){} %>
+
+<a id="scrollTop" href="javacript:void(0);" title="返回顶部" style="display: inline;"></a>
+
+<%}; %>
+
+<% layout("/pages/template/_layout.html",{head:headContent,body:bodyContent}){ %>
+<%} %>

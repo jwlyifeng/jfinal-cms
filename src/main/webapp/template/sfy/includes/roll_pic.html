@@ -1,0 +1,48 @@
+<div class="col-md-12">
+
+    <div class="panel panel-default">
+        <div class="panel-body" style="padding: 0px;">
+
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <% for(item in topPics){ %>
+                    <li data-target="#carousel-example-generic" data-slide-to="${itemLP.index-1}" ${itemLP.index==1?"class=\"active\"":""}></li>
+                    <%}%>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <% for(item in topPics){ %>
+                    <div style="height: 450px;" class="item ${itemLP.index==1?'active':''}">
+                        <% if(strutil.isNotEmpty(item.url)) { %>
+                        <a href="${item.url}" target="_blank">
+                            <% } %>
+                            <img src="${flyfox.getImage(item)}" alt="${item.title}" style="width:100%">
+                            <% if(strutil.isNotEmpty(item.url)) { %>
+                        </a>
+                        <% } %>
+                        <div class="carousel-caption">
+                            <h4></h4>
+                            <p>${item.title}</p>
+                        </div>
+                    </div>
+                    <% } %>
+
+
+                </div>
+
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">上一页</span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">下一页</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
