@@ -1,13 +1,13 @@
 package com.jflyfox.modules.front.service;
 
-import java.util.List;
-
 import com.jfinal.plugin.activerecord.Page;
 import com.jflyfox.jfinal.base.BaseService;
 import com.jflyfox.jfinal.base.Paginator;
 import com.jflyfox.modules.admin.image.model.TbImage;
 import com.jflyfox.modules.admin.image.model.TbImageAlbum;
 import com.jflyfox.util.cache.CacheManager;
+
+import java.util.List;
 
 public class FrontImageService extends BaseService {
 
@@ -33,6 +33,17 @@ public class FrontImageService extends BaseService {
 		String key = "albumList";
 		String sql = "select * from tb_image_album t where  status = 1 order by sort,id desc";
 		return TbImageAlbum.dao.findCache(cacheName, key, sql);
+	}
+
+	/**
+	 * 查询子相册列表
+	 * @param parentId
+	 * @return
+	 */
+	public List<TbImageAlbum> getAlbumListByParentId(int parentId) {
+		String key = "albumList";
+		String sql = "select * from tb_image_album t where parent_id = ? and status = 1 order by sort,id desc";
+		return TbImageAlbum.dao.findCache(cacheName, key, sql,parentId);
 	}
 
 	/**
@@ -105,7 +116,6 @@ public class FrontImageService extends BaseService {
 	 * 2015年4月29日 下午4:48:24 flyfox 369191470@qq.com
 	 * 
 	 * @param paginator
-	 * @param folder_id
 	 * @return
 	 */
 	public Page<TbImage> getRecommendImages(Paginator paginator) {

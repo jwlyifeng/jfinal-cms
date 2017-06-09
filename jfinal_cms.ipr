@@ -47,6 +47,9 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_3" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/target" />
   </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+  </component>
   <component name="libraryTable">
     <library name="Maven: c3p0:c3p0:0.9.1.2">
       <CLASSES>

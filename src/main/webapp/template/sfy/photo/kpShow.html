@@ -15,10 +15,10 @@ var headContent = {
 		$('.carousel').carousel({
 			interval: 2000
 		});
-		
+
 		// js加载避免优先级问题
 		$('.more').css('float','right').css('font-size','12px').css('color','green');
-		
+
 
 	});
 //-->
@@ -33,98 +33,364 @@ var bodyContent = {
 %>
 <%  include("/template/sfy/includes/header_menu.html"){} %>
 
+<!--轮播图-->
+<div class="row">
+    <!-- 图片 -->
+    <div class="col-md-12">
+
+        <div class="panel panel-default">
+            <div class="panel-body" style="padding: 0px;">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <% for(item in topPics){ %>
+                        <li data-target="#carousel-example-generic" data-slide-to="${itemLP.index-1}" ${itemLP.index==1?"class=\"active\"":""}></li>
+                        <%}%>
+                    </ol>
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <% for(item in topPics){ %>
+                        <div style="height: 450px;" class="item ${itemLP.index==1?'active':''}">
+                            <% if(strutil.isNotEmpty(item.url)) { %>
+                            <a href="${item.url}" target="_blank">
+                                <% } %>
+                                <img src="${flyfox.getImage(item)}" alt="${item.title}" style="width:100%">
+                                <% if(strutil.isNotEmpty(item.url)) { %>
+                            </a>
+                            <% } %>
+                            <div class="carousel-caption">
+                                <h4></h4>
+                                <p>${item.title}</p>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">上一页</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">下一页</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 
 <div class="container">
 
-    <div class="row">
-        <!-- 图片 -->
-        <div class="col-md-12">
-
-            <div class="panel panel-default">
-                <div class="panel-body" style="padding: 0px;">
-
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            <% for(item in topPics){ %>
-                            <li data-target="#carousel-example-generic" data-slide-to="${itemLP.index-1}"
-                                ${itemLP.index==1?"class=\"active\"":""}></li>
-                            <%}%>
-                        </ol>
-
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            <% for(item in topPics){ %>
-                            <div style="height: 450px;" class="item ${itemLP.index==1?'active':''}">
-                                <% if(strutil.isNotEmpty(item.url)) { %>
-                                <a href="${item.url}" target="_blank">
-                                    <% } %>
-                                    <img src="${flyfox.getImage(item)}" alt="${item.title}" style="width:100%">
-                                    <% if(strutil.isNotEmpty(item.url)) { %>
-                                </a>
-                                <% } %>
-                                <div class="carousel-caption">
-                                    <h4></h4>
-                                    <p>${item.title}</p>
+<!--客片列表-->
+    <div class="graphy_list">
+        <div class="row">
+            <div class="container">
+                <div class="col-lg-12">
+                    <% for(var item in tempImage.albmsByParentId(6)){ %>
+                    <div class="graphy_list_c">
+                        <div class="graphy_list_m">
+                            <div class="title">${item.name}</div>
+                            <div class="row">
+                                <%
+                                var childA = tempImage.images(1,4,item.id);
+                                for(var itemC in childA.list){%>
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="#" title="${itemC.name}"
+                                       class="thumbnail"><img src="${itemC.linkurl}" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">${itemC.name}</div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </div>
-                            <% } %>
-
-
-                        </div>
-
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="#carousel-example-generic" role="button"
-                           data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">上一页</span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" role="button"
-                           data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">下一页</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="row">
-
-        <div class="col-md-12">
-            <!-- 旅游 -->
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a href="${BASE_PATH }${flyfox.getMenu(4)}.html" target="_blank">客片展示</a>
-                        <a class="more" href="${BASE_PATH }${flyfox.getMenu(4)}.html" target="_blank">更多</a>
-                    </h3>
-                </div>
-                <div class="panel-body">
-
-                    <div class="row">
-                        <% for(item in travels.list){ %>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
-                                <a href="${BASE_PATH }front/article/${item.id}.html" target="_blank">
-                                    <img alt="${item.title}" src="${flyfox.getImage(item)}" data-holder-rendered="true"
-                                         style="height: 200px; width: 100%; display: block;">
-                                </a>
-                                <div class="caption">
-                                    <a href="${BASE_PATH }front/article/${item.id}.html"
-                                       target="_blank">${item.title}</a>
-                                </div>
+                                <%}%>
                             </div>
                         </div>
-                        <% if(itemLP.index%3==0){ %>
                     </div>
-                    <div class="row">
-                        <% } %>
-                        <% } %>
-                    </div>
+                    <% }%>
 
+                    <!--<div class="graphy_list_c">
+                        <div class="graphy_list_m">
+                            <div class="title">六月客照</div>
+                            <div class="row">
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-853.html" title="06月第一季"
+                                       class="thumbnail"><img src="./milan_kezhao_files/051647501960.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">06月第一季</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">16</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="graphy_list_c">
+                        <div class="graphy_list_m">
+                            <div class="title">五月客照</div>
+                            <div class="row">
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-852.html" title="05月第四季"
+                                       class="thumbnail"><img src="./milan_kezhao_files/251013201885.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">05月第四季</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">128</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-851.html" title="05月第三季"
+                                       class="thumbnail"><img src="./milan_kezhao_files/251008443992.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">05月第三季</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">97</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-850.html" title="05月第二季"
+                                       class="thumbnail"><img src="./milan_kezhao_files/241005303718.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">05月第二季</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">95</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-846.html" title="05月第一季"
+                                       class="thumbnail"><img src="./milan_kezhao_files/031016301330.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">05月第一季</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">367</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="graphy_list_c">
+                        <div class="graphy_list_m">
+                            <div class="title">四月客照</div>
+                            <div class="row">
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-845.html" title="04月第四季"
+                                       class="thumbnail"><img src="./milan_kezhao_files/291650479430.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">04月第四季</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">258</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-844.html" title="04月第三季"
+                                       class="thumbnail"><img src="./milan_kezhao_files/291648492160.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">04月第三季</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">179</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-843.html" title="04月第二季"
+                                       class="thumbnail"><img src="./milan_kezhao_files/291645574831.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">04月第二季</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">225</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-842.html" title="04月第一季"
+                                       class="thumbnail"><img src="./milan_kezhao_files/291642443858.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">04月第一季</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">143</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="graphy_list_c">
+                        <div class="graphy_list_m">
+                            <div class="title">三月客照</div>
+                            <div class="row">
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-841.html" title="03月第四周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/291635505223.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">03月第四周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">174</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-840.html" title="03月第三周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/131420081609.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">03月第三周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">535</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-839.html" title="03月第二周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/090922453962.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">03月第二周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">442</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-838.html" title="03月第一周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/021554439697.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">03月第一周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">412</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="graphy_list_c">
+                        <div class="graphy_list_m">
+                            <div class="title">二月客照</div>
+                            <div class="row">
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-837.html" title="02月第四周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/211508287743.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">02月第四周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">464</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-836.html" title="02月第三周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/211452521719.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">02月第三周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">475</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-835.html" title="02月第二周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/131052402838.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">02月第二周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">480</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-834.html" title="02月第一周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/020930401396.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">02月第一周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">544</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="graphy_list_c">
+                        <div class="graphy_list_m">
+                            <div class="title">一月客照</div>
+                            <div class="row">
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-822.html" title="01月第四周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/181005213980.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">01月第四周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">715</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-821.html" title="01月第三周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/160917583410.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">01月第三周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">432</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-820.html" title="01月第二周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/160914567140.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">01月第二周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">474</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-3 col-md-3">
+                                    <a href="http://www.milan520.com/channel-case-763.html" title="01月第一周"
+                                       class="thumbnail"><img src="./milan_kezhao_files/030921082531.jpg" data-cache="true"
+                                                              width="275" height="184">
+                                        <div class="graphy_list_c_t">
+                                            <div class="pull-left">01月第一周</div>
+                                            <div class="pull-right">点击量：<font color="#FF0000">497</font></div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>-->
                 </div>
             </div>
         </div>

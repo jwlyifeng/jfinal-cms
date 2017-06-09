@@ -1,7 +1,5 @@
 package com.jflyfox.modules.front.template;
 
-import java.util.List;
-
 import com.jfinal.plugin.activerecord.Page;
 import com.jflyfox.jfinal.base.BaseService;
 import com.jflyfox.jfinal.base.Paginator;
@@ -9,6 +7,8 @@ import com.jflyfox.modules.admin.image.model.TbImage;
 import com.jflyfox.modules.admin.image.model.TbImageAlbum;
 import com.jflyfox.modules.front.service.FrontImageService;
 import com.jflyfox.util.extend.RandomStrUtils;
+
+import java.util.List;
 
 /**
  * 模板方法接口
@@ -27,6 +27,9 @@ public class TemplateImageService extends BaseService {
 		return service.getAlbumList();
 	}
 
+	public List<TbImageAlbum> albmsByParentId(int parentId){
+		return  service.getAlbumListByParentId(parentId);
+	}
 	public TbImageAlbum album(Integer albumId) {
 		return service.getAlbum(albumId);
 	}

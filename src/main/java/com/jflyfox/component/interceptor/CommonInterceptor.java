@@ -42,6 +42,9 @@ public class CommonInterceptor implements Interceptor {
 				controller.setAttr(JFlyFoxUtils.DESCRIPTION_ATTR, title);
 			} else {
 				TbSite site = siteSvc.getSite(user.getBackSiteId());
+				if(null == site){
+					site = siteSvc.getDefaultSite();
+				}
 				controller.setAttr(JFlyFoxUtils.WEBSITE_TITLE, site.getSiteTitle());
 				controller.setAttr(JFlyFoxUtils.TITLE_ATTR, site.getSiteTitle());
 				controller.setAttr(JFlyFoxUtils.KEYWORDS_ATTR, site.getSiteTitle());
