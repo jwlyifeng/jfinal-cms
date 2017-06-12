@@ -97,7 +97,7 @@ var bodyContent = {
                         <small>PHOTOGRAPHY</small>
                     </h3>
                 </div>
-                <span class="pull-right" style="padding-top:24px;"><a href="#">更多 &gt;&gt;</a></span>
+                <span class="pull-right" style="padding-top:24px;"><a href="${BASE_PATH }album/image/imgList/${tempImage.randomAlbumId()}${item.id}.html">更多 &gt;&gt;</a></span>
             </div>
             <div class="scene_c">
                 <%
@@ -105,9 +105,9 @@ var bodyContent = {
                 for(var itemC in childA.list){%>
                 <div class="col-sm-3 col-md-3">
                     <div class="thumbnail">
-                        <a href="#" title="${itemC.name}"
+                        <a href="${BASE_PATH }album/image/imgList/${tempImage.randomAlbumId()}${item.id}.html" title="${itemC.name}"
                            target="_blank"><img
-                                src="${itemC.linkurl}" data-cache="true" width="275" height="184"></a>
+                                src="${BASE_PATH }/${itemC.image_url}" data-cache="true" width="275" height="184"></a>
                         <h4>${itemC.name}</h4>
                     </div>
                 </div>
@@ -152,8 +152,8 @@ var bodyContent = {
                         for(var itemC in childA.list){%>
                         <div class="col-sm-3 col-md-3">
                             <div class="thumbnail">
-                                <a href="#" title="${itemC.name}"
-                                   target="_blank"><img src="${itemC.linkurl}" data-cache="true"
+                                <a href="${BASE_PATH }album/image/imgList/${tempImage.randomAlbumId()}${item.id}.html" title="${itemC.name}"
+                                   target="_blank"><img src="${BASE_PATH }/${itemC.image_url}" data-cache="true"
                                                         width="275" height="184"></a>
                                 <h4>${itemC.name}</h4>
                             </div>

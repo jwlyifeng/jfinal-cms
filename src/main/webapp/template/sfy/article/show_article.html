@@ -19,6 +19,12 @@ var headContent = {
 
 
 </script>
+<style>
+    .articleC img{
+        width:100%;
+        margin:0 auto;
+    }
+</style>
 <script type="text/javascript" src="${BASE_PATH }template/sfy/article/show_article.js"></script>
 <%
 };
@@ -131,7 +137,7 @@ var bodyContent = {
 
                 </header>
 
-                <section class="art-content" style="word-break:break-all;word-wrap:break-word;">
+                <section class="art-content articleC" style="word-break:break-all;word-wrap:break-word;">
                     <% if(strutil.isNotEmpty(item.image_net_url) ) { %>
                     <div class="thumbnail center-block" style="width:320px;">
                         <img src="${item.image_net_url }" alt="${item.title}" class="img-rounded"

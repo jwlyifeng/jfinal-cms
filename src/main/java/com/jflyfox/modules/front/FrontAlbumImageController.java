@@ -68,4 +68,25 @@ public class FrontAlbumImageController extends BaseProjectController {
 
 		renderAuto(path + "common_image.html");
 	}
+
+
+	@Before(FrontInterceptor.class)
+	public void imgList() {
+		String albumIdStr = getPara();
+		albumIdStr = albumIdStr.substring(5);
+		int albumId = NumberUtils.parseInt(albumIdStr);
+		// 活动目录
+		setAttr("album_selected", albumId);
+
+		TbImageAlbum album = new FrontImageService().getAlbum(albumId);
+		setAttr("album", album);
+
+		setAttr("paginator", getPaginator());
+
+		// seo：title优化
+		String albumName = (album == null ? "" : album.getName() + " - ");
+		setAttr(JFlyFoxUtils.TITLE_ATTR, albumName + getAttr(JFlyFoxUtils.TITLE_ATTR));
+
+		renderAuto("photo/kpDetail.html");
+	}
 }
