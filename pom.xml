@@ -152,7 +152,32 @@
 	    <url>http://maven.aliyun.com/nexus/content/groups/public</url>
 	  </repository>
 	</repositories>
-  
+	<profiles>
+		<profile>
+			<id>develop</id>
+			<properties>
+				<env>dev</env>
+				<!--<db.jdbcUrl>jdbc:mysql://127.0.0.1:3306/jfinal_cms?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</db.jdbcUrl>
+				<db.user>root</db.user>
+				<db.password>root</db.password>
+				<db.jdbcUrl>com.mysql.jdbc.Driver</db.jdbcUrl>-->
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>product</id>
+			<properties>
+				<env>product</env>
+				<!--<db.jdbcUrl>jdbc:mysql://47.93.247.121:3306/jfinal_cms?characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull</db.jdbcUrl>
+				<db.user>root</db.user>
+				<db.password>sfy!@#123</db.password>
+				<db.jdbcUrl>com.mysql.jdbc.Driver</db.jdbcUrl>-->
+			</properties>
+		</profile>
+
+	</profiles>
 	<build>
 		<!-- 打包目录 -->
 		<directory>target</directory>
@@ -214,5 +239,16 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<filters> <!-- 指定使用的 filter -->
+			<filter>src/main/resources/conf/db-${env}.properties</filter>
+			<filter>src/main/resources/conf/upload-${env}.properties</filter>
+		</filters>
+		<resources>
+			<resource> <!-- 配置需要被替换的资源文件路径, db.properties 应该在 src/main/resource 目录下 -->
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering> <!-- 是否使用过滤器 -->
+			</resource>
+		</resources>
 	</build>
+
 </project>
